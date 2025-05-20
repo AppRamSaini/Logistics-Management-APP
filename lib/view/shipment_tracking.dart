@@ -14,8 +14,6 @@ import 'package:logistics_app/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:logistics_app/view/dashboard/dashboard.dart';
 
-
-
 class ShipmentTracking extends StatefulWidget {
   final String shipmentId;
   final String? pickupLocation;
@@ -127,7 +125,6 @@ class ShipmentTrackingState extends State<ShipmentTracking> {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newLatLngZoom(_currentLatLng!, 14));
   }
-
 
   Future<LatLng> _getLatLngFromAddress(String address) async {
     final String url =
@@ -252,9 +249,6 @@ class ShipmentTrackingState extends State<ShipmentTracking> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-                "Enable location tracking to update your shipment status in real-time",
-                style: AppStyle.medium_16(AppColors.black)),
             Expanded(
               child: GoogleMap(
                 initialCameraPosition: CameraPosition(
@@ -273,104 +267,101 @@ class ShipmentTrackingState extends State<ShipmentTracking> {
               margin: EdgeInsets.symmetric(vertical: size.height * 0.02),
               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
-                  color: AppColors.blueGrey,
-                  borderRadius: BorderRadius.circular(8)),
+                color: AppColors.blueGrey,
+                borderRadius: BorderRadius.circular(8),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min, // Auto height
                 children: [
-                  SizedBox(
-                    height: size.height * 0.14,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Flexible(
-                          child: Row(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 5),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: AppColors.whiteColor),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Icon(Icons.my_location,
-                                        color: AppColors.themeColor),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 4),
-                                      child: Column(
-                                          children: List.generate(
-                                              5,
-                                              (index) => Container(
-                                                  margin:
-                                                      EdgeInsets.only(top: 5),
-                                                  height: 5,
-                                                  width: 2,
-                                                  color:
-                                                      AppColors.themeColor))),
-                                    ),
-                                    Icon(Icons.location_on,
-                                        color: AppColors.themeColor),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              Flexible(
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 12),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: AppColors.whiteColor),
-                                        child: Text(
-                                            widget.pickupLocation.toString(),
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 1)),
-                                    Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 12),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: AppColors.whiteColor),
-                                        child: Text(
-                                            widget.dropLocation.toString())),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                            ],
-                          ),
+                  Row(
+                    crossAxisAlignment:
+                        CrossAxisAlignment.start, // Important for auto height
+                    children: [
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: AppColors.whiteColor,
                         ),
-                      ],
-                    ),
+                        child: Column(
+                          children: [
+                            Icon(Icons.my_location,
+                                color: AppColors.themeColor),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 4),
+                              child: Column(
+                                children: List.generate(
+                                  4,
+                                  (index) => Container(
+                                    margin: EdgeInsets.only(top: 5),
+                                    height: 5,
+                                    width: 2,
+                                    color: AppColors.themeColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Icon(Icons.location_on,
+                                color: AppColors.themeColor),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 6),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: AppColors.whiteColor),
+                              child: Text(
+                                widget.pickupLocation.toString(),
+                                style: TextStyle(fontSize: 11),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 3,
+                              ),
+                            ),
+                            SizedBox(height: 6),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 6),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: AppColors.whiteColor
+                              ),
+                              child: Text(
+                                widget.dropLocation.toString(),
+                                style: TextStyle(fontSize: 11),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 3,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Text(
-                        "Updates every 15 minutes and visible to Broker, Carrier, and Customer.",
-                      )),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10, top: 5),
-                    child: appButton(
-                        onPressed: () {
-                          reachedLocationDialog(context, () async {
-                            callToReachedLocation();
-                          });
-                        },
-                        minWidth: size.width,
-                        text: "Reached Location"),
-                  )
+                  SizedBox(height: 12),
+                  Text(
+                    "Updates every 10 minutes and visible to Broker, Carrier, and Customer.",
+                    style: TextStyle(fontSize: 10),
+                  ),
+                  SizedBox(height: 12),
+                  appButton(
+                    onPressed: () {
+                      reachedLocationDialog(context, () async {
+                        callToReachedLocation();
+                      });
+                    },
+                    minWidth: size.width,
+                    text: "Reached Location",
+                  ),
                 ],
               ),
             ),

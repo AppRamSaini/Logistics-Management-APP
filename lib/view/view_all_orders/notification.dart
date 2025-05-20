@@ -20,17 +20,15 @@ class NotificationListState extends State<NotificationListPage> {
   final DashboardController _dashboardController =
       Get.put(DashboardController());
 
-  Future<void> refreshData()async{
+  Future<void> refreshData() async {
     _dashboardController.getShipmentNotificationsApi(context);
-    setState(() {
-
-    });
+    setState(() {});
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppbar(text: 'Notifications'),
-
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: RefreshIndicator(
@@ -48,8 +46,8 @@ class NotificationListState extends State<NotificationListPage> {
                 return snapshot.data!.isEmpty
                     ? Center(child: Text("No Notifications Found!"))
                     : ListView.builder(
-                        itemCount:
-                            snapshot.data!.length, // Shipment की लंबाई के आधार पर
+                        itemCount: snapshot
+                            .data!.length, // Shipment की लंबाई के आधार पर
                         shrinkWrap: true,
                         physics: AlwaysScrollableScrollPhysics(),
                         itemBuilder: (_, index) => Container(
@@ -72,41 +70,37 @@ class NotificationListState extends State<NotificationListPage> {
                                       color: AppColors.themeColor,
                                     ),
                                   ),
-                                  title: Text(
-                                      "New Shipment ${snapshot.data![index].shipmentId!.name.toString()} have been Assigned",
-                                      style: AppStyle.medium_14(AppColors.black)),
+                                  title: Text("New Shipment has been Assigned",
+                                      style: AppStyle.semibold_14(
+                                          AppColors.black)),
                                   subtitle: Text(
-                                      snapshot
-                                          .data![index].text??''
-                                          ,
+                                      snapshot.data![index].text ??
+                                          'The customer left a review',
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 2,
-                                      style:
-                                          AppStyle.medium_12(AppColors.black50))),
+                                      style: AppStyle.medium_12(
+                                          AppColors.black50))),
                               Divider(color: AppColors.black10),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                      formatDate(snapshot
-                                          .data![index].createdAt
+                                      formatDate(snapshot.data![index].createdAt
                                           .toString()),
-                                      style: AppStyle.medium_14(AppColors.black)),
+                                      style:
+                                          AppStyle.medium_14(AppColors.black)),
                                   TextButton(
                                       onPressed: () async {
                                         await _dashboardController
-                                            .readNotificationAPI(context,
-                                            snapshot
-                                                .data![index].id
-                                                .toString());
-
-print("d---------${snapshot
-    .data![index].id
-    .toString()}");
+                                            .readNotificationAPI(
+                                                context,
+                                                snapshot.data![index].id
+                                                    .toString());
 
                                         setState(() {});
                                       },
-                                      child: Text("Mark As Done",
+                                      child: Text("Mark As Read",
                                           style: AppStyle.semibold_14(
                                               AppColors.themeColor)))
                                 ],

@@ -34,10 +34,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _dashboardController.fetchDashboardData(context).then((shipmentData) {
-      _streamController.add(shipmentData);
-      setState(() {});
-    });
+    onRefresh();
   }
 
   Future onRefresh() async {
@@ -105,11 +102,11 @@ class _HomePageState extends State<HomePage> {
                               title: Text(
                                   capitalizeFirstLetter(
                                       data.userResult!.name.toString()),
-                                  style: AppStyle.medium_16(AppColors.black)),
+                                  style: AppStyle.medium_14(AppColors.black)),
                               subtitle: Text(
                                   capitalizeFirstLetter(
                                       data.driver!.companyName ?? 'N/A'),
-                                  style: AppStyle.medium_14(AppColors.black)),
+                                  style: AppStyle.medium_12(AppColors.black)),
                               trailing: _buildSwitchRow(context));
                         }
                       }),
@@ -126,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Flexible(
                                 child: _shipmentContainer(
-                                    "Total in-transit",
+                                    "Total \nin-transit",
                                     AppColors.themeColor,
                                     AppColors.whiteColor,
                                     data.statusData!.transit.toString()),
@@ -134,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                               SizedBox(width: size.width * 0.03),
                               Flexible(
                                 child: _shipmentContainer(
-                                    "Delivered",
+                                    "Delivered Shipment",
                                     AppColors.black,
                                     AppColors.whiteColor,
                                     data.statusData!.delivered.toString()),
@@ -229,12 +226,13 @@ Widget _shipmentContainer(
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
                   child: Text(text.toString().toUpperCase(),
                       overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
                       style: AppStyle.medium_14(txtColor))),
               Container(
                 padding: EdgeInsets.all(5),
@@ -491,25 +489,87 @@ void driverDetailsDialog(BuildContext context, DriverDetails driver) {
                             driver.userResult!.name.toString()),
                         style: GoogleFonts.ptSans(
                             color: Colors.black,
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500)),
                     subtitle: Text(
                         capitalizeFirstLetter(
-                            driver.driver!.companyName ?? 'N/A'),
+                            driver.userResult!.email ?? 'N/A'),
                         style: GoogleFonts.ptSans(
                             color: Colors.black,
-                            fontSize: 14,
+                            fontSize: 12,
                             fontWeight: FontWeight.w500)),
                   ),
                   Divider(color: Colors.grey.withOpacity(0.1)),
-                  Text('Address : ',
-                      style: GoogleFonts.ptSans(
-                          color: Colors.black, fontSize: 16)),
-                  Text(capitalizeFirstLetter(driver.driver!.address.toString()),
-                      style: GoogleFonts.ptSans(
-                          color: Colors.black87,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500)),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Mobile Number : ',
+                          style: GoogleFonts.ptSans(
+                              color: Colors.black, fontSize: 14)),
+                      Flexible(
+                        child: Text(
+                            "+91 ${capitalizeFirstLetter(driver.userResult!.contact ?? '1234567890')}",
+                            style: GoogleFonts.ptSans(
+                                color: Colors.black87,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500)),
+                      ),
+                    ],
+                  ),
+                  Divider(color: Colors.grey.withOpacity(0.1)),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Role Type : ',
+                          style: GoogleFonts.ptSans(
+                              color: Colors.black, fontSize: 14)),
+                      Flexible(
+                        child: Text(
+                            capitalizeFirstLetter(
+                                driver.userResult!.role ?? 'Driver'),
+                            style: GoogleFonts.ptSans(
+                                color: Colors.black87,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500)),
+                      ),
+                    ],
+                  ),
+                  Divider(color: Colors.grey.withOpacity(0.1)),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Company Name : ',
+                          style: GoogleFonts.ptSans(
+                              color: Colors.black, fontSize: 14)),
+                      Flexible(
+                        child: Text(
+                            capitalizeFirstLetter(
+                                driver.driver!.companyName ?? 'N/A'),
+                            style: GoogleFonts.ptSans(
+                                color: Colors.black87,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500)),
+                      ),
+                    ],
+                  ),
+                  Divider(color: Colors.grey.withOpacity(0.1)),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Address : ',
+                          style: GoogleFonts.ptSans(
+                              color: Colors.black, fontSize: 14)),
+                      Flexible(
+                        child: Text(
+                            capitalizeFirstLetter(
+                                driver.driver!.address ?? 'N/A'),
+                            style: GoogleFonts.ptSans(
+                                color: Colors.black87,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500)),
+                      ),
+                    ],
+                  ),
                   Divider(color: Colors.grey.withOpacity(0.1)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -518,7 +578,6 @@ void driverDetailsDialog(BuildContext context, DriverDetails driver) {
                         onPressed: () {
                           Navigator.pop(context);
                           Navigator.push(
-
                               context,
                               MaterialPageRoute(
                                   builder: (_) => DeleteUserAccount()));

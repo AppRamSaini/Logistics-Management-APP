@@ -11,10 +11,6 @@ void main() async{
   runApp(const MyApp());
   configLoading();
 }
-
-
-
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

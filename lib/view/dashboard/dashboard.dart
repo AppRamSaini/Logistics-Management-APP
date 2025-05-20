@@ -28,7 +28,7 @@ class _DashboardState extends State<Dashboard> {
   List tabsList = [
     {"icon": Icons.home, "label": 'Home'},
     {"icon": Icons.delivery_dining, "label": 'History'},
-    {"icon": Icons.notifications_none_rounded, "label": 'Notification'},
+    {"icon": Icons.notifications_none_rounded, "label": 'Notifications'},
   ];
 
   int selectedIndex = 0;

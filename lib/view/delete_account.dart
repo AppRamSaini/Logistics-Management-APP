@@ -24,11 +24,7 @@ class _DeleteUserAccountState extends State<DeleteUserAccount> {
     'Do not find useful anymore',
     'Other',
   ];
-  List<String> guideline = [
-    "\u2022 All your winning and loss record",
-    "\u2022 All History related to Booking Court, Tournament etc",
-    "\u2022 All your data of tenniskhelo will be permanently deleted"
-  ];
+
   bool otherReasonBox = false;
   final _formKey = GlobalKey<FormState>();
 
@@ -47,8 +43,6 @@ class _DeleteUserAccountState extends State<DeleteUserAccount> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: PreferredSize(
@@ -65,7 +59,7 @@ class _DeleteUserAccountState extends State<DeleteUserAccount> {
           ),
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
           child: Form(
             key: _formKey,
             child: Column(
@@ -78,11 +72,10 @@ class _DeleteUserAccountState extends State<DeleteUserAccount> {
                     Image.asset(AppAssets.appLogo, width: size.width * 0.6),
                     SizedBox(height: 20),
                     Text(
-                      'By Delete your account ',
+                      'Delete your account ',
                       style: GoogleFonts.poppins(
                           color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600),
+                          fontSize: 20,fontWeight: FontWeight.w600),
                     ),
                     Text(
                       "Help us improve our app, Explain the reason why you want to delete your account",

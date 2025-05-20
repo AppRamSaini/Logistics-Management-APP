@@ -66,7 +66,7 @@ print (resData);
         if (resData['status'] == true) {
           driverDetails = DriverDetails.fromJson(resData['data']);
           print('Driver Details: ${driverDetails.driver!.companyName.toString()}');
-          if (!forDashboard && driverDetails.driver!.companyName == null||driverDetails.driver!.companyName.isEmpty) {
+          if (!forDashboard && driverDetails.driver!.companyName == null||driverDetails.driver!.companyName!.isEmpty) {
             Navigator.push(
                 context,
                 MaterialPageRoute(

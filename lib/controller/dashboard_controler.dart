@@ -83,22 +83,22 @@ class DashboardController extends GetxController {
               .toList();
           return shipments;
         } else {
-          customSnackBar(resData['message'] ?? 'Failed to load!',
-              isError: true);
+          // customSnackBar(resData['message'] ?? 'Failed to load!',
+          //     isError: true);
           return shipments;
         }
       } else if (response.statusCode == 401) {
         customSnackBar('Token has been expired!', isError: true);
         navigateToLogin(context);
       } else {
-        customSnackBar('Error: ${response.statusCode}', isError: true);
+        // customSnackBar('Error: ${response.statusCode}', isError: true);
         return shipments;
       }
     } on SocketException {
       customSnackBar('Internet Connection Error!', isError: true);
       return shipments;
     } catch (e) {
-      customSnackBar('Something went wrong', isError: true);
+      // customSnackBar('Something went wrong', isError: true);
       return shipments;
     } finally {
       EasyLoading.dismiss();
@@ -138,7 +138,7 @@ class DashboardController extends GetxController {
       customSnackBar('Internet Connection Error!', isError: true);
       return shipmentDetailsData;
     } catch (e) {
-      customSnackBar('Something went wrong', isError: true);
+      // customSnackBar('Something went wrong', isError: true);
       return shipmentDetailsData;
     } finally {
       EasyLoading.dismiss();
@@ -178,7 +178,7 @@ class DashboardController extends GetxController {
           isError: true);
     } catch (e) {
       print("Error in cancelShipmentAPI: $e");
-      customSnackBar('Something went wrong', isError: true);
+      // customSnackBar('Something went wrong', isError: true);
     } finally {
       EasyLoading.dismiss(); // Dismiss loading indicator before navigation
       Navigator.pop(context);
@@ -278,7 +278,7 @@ class DashboardController extends GetxController {
           isError: true);
     } catch (e) {
       print("Error in: $e");
-      customSnackBar('Something went wrong', isError: true);
+      // customSnackBar('Something went wrong', isError: true);
     } finally {
       EasyLoading.dismiss();
     }
@@ -316,7 +316,7 @@ class DashboardController extends GetxController {
       customSnackBar('Internet Connection Error!', isError: true);
       return shipmentsHistory;
     } catch (e) {
-      customSnackBar('Something went wrong', isError: true);
+      // customSnackBar('Something went wrong', isError: true);
       return shipmentsHistory;
     } finally {
       EasyLoading.dismiss();

@@ -1,3 +1,6 @@
+// To parse this JSON data, do
+//
+//     final getDriverDetailsModel = getDriverDetailsModelFromJson(jsonString);
 
 import 'dart:convert';
 
@@ -54,8 +57,8 @@ class Driver {
   String? driverIdRef;
   String? address;
   String? vin;
-  dynamic companyName;
-  dynamic mcNumber;
+  String? companyName;
+  String? mcNumber;
   int? v;
 
   Driver({
@@ -92,19 +95,47 @@ class Driver {
 class UserResult {
   String? id;
   String? name;
+  String? email;
+  String? role;
+  String? contact;
+  dynamic otp;
+  bool? otpVerify;
+  String? createdBy;
+  int? v;
 
   UserResult({
     this.id,
     this.name,
+    this.email,
+    this.role,
+    this.contact,
+    this.otp,
+    this.otpVerify,
+    this.createdBy,
+    this.v,
   });
 
   factory UserResult.fromJson(Map<String, dynamic> json) => UserResult(
     id: json["_id"],
     name: json["name"],
+    email: json["email"],
+    role: json["role"],
+    contact: json["contact"],
+    otp: json["Otp"],
+    otpVerify: json["OtpVerify"],
+    createdBy: json["created_by"],
+    v: json["__v"],
   );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
     "name": name,
+    "email": email,
+    "role": role,
+    "contact": contact,
+    "Otp": otp,
+    "OtpVerify": otpVerify,
+    "created_by": createdBy,
+    "__v": v,
   };
 }
