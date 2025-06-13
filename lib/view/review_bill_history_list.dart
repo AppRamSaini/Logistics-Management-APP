@@ -69,34 +69,128 @@ Widget _allOrdersWidget(
   return Container(
     margin: const EdgeInsets.only(bottom: 10),
     decoration: BoxDecoration(
-      border: Border.all(color: AppColors.black10),
-      borderRadius: BorderRadius.circular(8),
-      color: AppColors.whiteColor,
-    ),
-    child: ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 6),
-      leading: CircleAvatar(
-        child:
-            Icon(Icons.fire_truck_sharp, size: 18, color: AppColors.themeColor),
-      ),
-      title: Text("Shipment Name :".toUpperCase(),
-          style: AppStyle.medium_14(AppColors.black50)),
-      subtitle: Text(data.name.toString().toUpperCase(),
-          style: AppStyle.medium_14(AppColors.black)),
-      trailing: GestureDetector(
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (_) => ReviewBillHistoryViewer(
-                      bol: data.uploadedBol.toString())));
-        },
-        child: CircleAvatar(
-          backgroundColor: AppColors.grey,
-          child:
-              Icon(Icons.arrow_forward_ios, size: 16, color: AppColors.black50),
+        border: Border.all(color: AppColors.black10),
+        borderRadius: BorderRadius.circular(8),
+        color: AppColors.whiteColor),
+    child: Column(
+      children: [
+        ListTile(
+          dense: true,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 6),
+          leading: CircleAvatar(
+              child: Icon(Icons.fire_truck_sharp,
+                  size: 18, color: AppColors.themeColor)),
+          title: Text(data.name.toString(),
+              style: AppStyle.medium_14(AppColors.black50)),
+          subtitle: Text(data.description.toString(),
+              style: AppStyle.medium_14(AppColors.black)),
+          trailing: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => ReviewBillHistoryViewer(
+                          bol: data.uploadedBol.toString())));
+            },
+            child: CircleAvatar(
+              backgroundColor: AppColors.grey,
+              child: Icon(Icons.arrow_forward_ios,
+                  size: 16, color: AppColors.black50),
+            ),
+          ),
         ),
-      ),
+        Divider(color: AppColors.grey.withOpacity(0.8)),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Shipment Status",
+                      style: AppStyle.medium_16(AppColors.black)),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    decoration: BoxDecoration(
+                        color: data.driverLocation == 'transit'
+                            ? AppColors.red.withOpacity(0.2)
+                            : data.driverLocation == 'running'
+                                ? AppColors.orange.withOpacity(0.2)
+                                : data.driverLocation == 'Reached'
+                                    ? AppColors.orange.withOpacity(0.2)
+                                    : AppColors.green.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(4)),
+                    child: Text(
+                      data.driverLocation?.toString().toUpperCase() ??
+                          "IN-TRANSIT",
+                      style: AppStyle.semibold_12(
+                        data.driverLocation == 'transit'
+                            ? AppColors.red
+                            : data.driverLocation == 'running'
+                                ? AppColors.orange
+                                : data.driverLocation == 'Reached'
+                                    ? AppColors.orange
+                                    : AppColors.green,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                      child: Text("Pickup Location : ",
+                          style: AppStyle.medium_16(AppColors.black))),
+                  Flexible(
+                    child: Text(
+                      data.pickupLocation?.toString() ?? "",
+                      style: AppStyle.semibold_12(
+                        AppColors.black50,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                      child: Text("Drop Location : ",
+                          style: AppStyle.medium_16(AppColors.black))),
+                  Flexible(
+                    child: Text(
+                      data.dropLocation?.toString() ?? "",
+                      style: AppStyle.semibold_12(
+                        AppColors.black50,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                      child: Text("Shipping Date : ",
+                          style: AppStyle.medium_16(AppColors.black))),
+                  Flexible(
+                    child: Text(
+                      formatDate(data.shippingDate.toString() ?? ""),
+                      style: AppStyle.semibold_12(
+                        AppColors.black50,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        )
+      ],
     ),
   );
 }

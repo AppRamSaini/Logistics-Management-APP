@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logistics_app/helper/app_colors.dart';
 import 'package:logistics_app/helper/global_file.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
@@ -13,48 +14,21 @@ class ReviewBillHistoryViewer extends StatefulWidget {
 
 class ReviewBillHistoryViewerState extends State<ReviewBillHistoryViewer> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  bool isLoading = true; // Initially, set loading to true
-  @override
   Widget build(BuildContext context) {
-    // WebViewController controller = WebViewController()
-    //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
-    //   ..setNavigationDelegate(
-    //     NavigationDelegate(
-    //       onProgress: (int progress) {
-    //       },
-    //       onPageStarted: (value) {
-    //         setState(() {
-    //           isLoading = true;
-    //         });
-    //       },
-    //       onPageFinished: (value) {
-    //         setState(() {
-    //           isLoading = false;
-    //         });
-    //       },
-    //       onHttpError: (HttpResponseError error) {},
-    //       onWebResourceError: (WebResourceError error) {},
-    //       onNavigationRequest: (NavigationRequest request) {
-    //         if (request.url.startsWith(widget.bol.toString())) {
-    //           return NavigationDecision.prevent;
-    //         }
-    //         return NavigationDecision.navigate;
-    //       },
-    //     ),
-    //   )
-    //   ..loadRequest(Uri.parse(widget.bol.toString()));
-
+    print("---------${widget.bol}");
     return Scaffold(
-      appBar: customAppbar(text: "Review Bills History"),
+      backgroundColor: AppColors.whiteColor,
+      appBar: customAppbar(text: "Uploaded BOL View"),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SfPdfViewer.network(
-            widget.bol.toString(),
-            password: 'syncfusion'),
+        child: widget.bol != 'null'
+            ? SfPdfViewer.network(widget.bol.toString(), password: 'syncfusion')
+            : Center(
+                child: Text(
+                  "Uploaded BOL not found!",
+                  style: TextStyle(color: AppColors.themeColor,fontSize: 16),
+                ),
+              ),
       ),
     );
   }

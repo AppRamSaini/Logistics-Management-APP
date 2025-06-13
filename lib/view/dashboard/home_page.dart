@@ -40,7 +40,6 @@ class _HomePageState extends State<HomePage> {
   Future onRefresh() async {
     _dashboardController.fetchDashboardData(context).then((shipmentData) {
       _streamController.add(shipmentData);
-      setState(() {});
     });
   }
 

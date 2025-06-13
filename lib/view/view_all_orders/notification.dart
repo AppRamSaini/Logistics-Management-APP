@@ -70,7 +70,7 @@ class NotificationListState extends State<NotificationListPage> {
                                       color: AppColors.themeColor,
                                     ),
                                   ),
-                                  title: Text("New Shipment has been Assigned",
+                                  title: Text('New Shipment "${snapshot.data![index].shipmentId!.name??''}" has been Assigned',
                                       style: AppStyle.semibold_14(
                                           AppColors.black)),
                                   subtitle: Text(
