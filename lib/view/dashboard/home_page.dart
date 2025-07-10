@@ -63,52 +63,89 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   FutureBuilder<DriverDetails?>(
-                      future: _authController.fetchDriver(context),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              leading: CircleAvatar(
-                                radius: 25,
-                                backgroundColor: AppColors.themeColor,
-                                child: Text('LG',
-                                    style: AppStyle.medium_16(
-                                        AppColors.whiteColor)),
-                              ),
-                              title: Text("Loading...",
-                                  style: AppStyle.medium_16(AppColors.black)),
-                              subtitle: Text("Loading...",
-                                  style: AppStyle.medium_14(AppColors.black)),
-                              trailing: _buildSwitchRow(context));
-                        } else {
-                          DriverDetails data = snapshot.data!;
-                          String initials =
-                              getInitials(data.userResult!.name.toString());
-                          return ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              leading: GestureDetector(
-                                onTap: () {
-                                  driverDetailsDialog(context, data);
-                                },
-                                child: CircleAvatar(
-                                    radius: 25,
-                                    backgroundColor: AppColors.themeColor,
-                                    child: Text(initials,
-                                        style: AppStyle.medium_16(
-                                            AppColors.whiteColor))),
-                              ),
-                              title: Text(
-                                  capitalizeFirstLetter(
-                                      data.userResult!.name.toString()),
-                                  style: AppStyle.medium_14(AppColors.black)),
-                              subtitle: Text(
-                                  capitalizeFirstLetter(
-                                      data.driver!.companyName ?? 'N/A'),
-                                  style: AppStyle.medium_12(AppColors.black)),
-                              trailing: _buildSwitchRow(context));
-                        }
-                      }),
+                    future: _authController.fetchDriver(context),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          leading: CircleAvatar(
+                            radius: 25,
+                            backgroundColor: AppColors.themeColor,
+                            child: Text('LG',
+                                style: AppStyle.medium_16(AppColors.whiteColor)),
+                          ),
+                          title: Text("Loading...",
+                              style: AppStyle.medium_16(AppColors.black)),
+                          subtitle: Text("Fetching driver details...",
+                              style: AppStyle.medium_14(AppColors.black)),
+                          trailing: _buildSwitchRow(context),
+                        );
+                      }
+
+                      if (snapshot.hasError) {
+                        // 🔴 Error State
+                        return ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          leading: const Icon(Icons.error, color: Colors.red),
+                          title: Text("Error loading driver",
+                              style: AppStyle.medium_14(AppColors.black)),
+                          subtitle: Text(snapshot.error.toString(),
+                              style: AppStyle.normal_12(AppColors.black)),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.refresh),
+                            onPressed: () {
+                              setState(() {}); // Retry by rebuilding
+                            },
+                          ),
+                        );
+                      }
+
+                      if (!snapshot.hasData || snapshot.data == null) {
+                        // ⚠️ No Data / Null Response
+                        return ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          leading: const Icon(Icons.warning, color: Colors.orange),
+                          title: Text("No driver data found",
+                              style: AppStyle.medium_14(AppColors.black)),
+                          subtitle: Text("Please try again or contact support.",
+                              style: AppStyle.normal_12(AppColors.black)),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.refresh),
+                            onPressed: () {
+                              setState(() {}); // Trigger refresh
+                            },
+                          ),
+                        );
+                      }
+
+                      // ✅ Success State
+                      final DriverDetails data = snapshot.data!;
+                      final String initials = getInitials(data.userResult?.name ?? "NA");
+
+                      return ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: GestureDetector(
+                          onTap: () => driverDetailsDialog(context, data),
+                          child: CircleAvatar(
+                            radius: 25,
+                            backgroundColor: AppColors.themeColor,
+                            child: Text(initials,
+                                style: AppStyle.medium_16(AppColors.whiteColor)),
+                          ),
+                        ),
+                        title: Text(
+                          capitalizeFirstLetter(data.userResult?.name ?? "N/A"),
+                          style: AppStyle.medium_14(AppColors.black),
+                        ),
+                        subtitle: Text(
+                          capitalizeFirstLetter(data.driver?.companyName ?? 'N/A'),
+                          style: AppStyle.medium_12(AppColors.black),
+                        ),
+                        trailing: _buildSwitchRow(context),
+                      );
+                    },
+                  ),
+
                   Expanded(
                       child: RefreshIndicator(
                     onRefresh: onRefresh,
@@ -151,7 +188,7 @@ class _HomePageState extends State<HomePage> {
                               SizedBox(width: size.width * 0.03),
                               Flexible(
                                 child: _shipmentContainer(
-                                    "Total Shipment",
+                                    "Total \nShipment",
                                     AppColors.blueGrey,
                                     AppColors.black,
                                     data.shipment.toString()),
@@ -233,6 +270,8 @@ Widget _shipmentContainer(
                       maxLines: 2,
                       textAlign: TextAlign.center,
                       style: AppStyle.medium_14(txtColor))),
+
+              SizedBox(width: 10),
               Container(
                 padding: EdgeInsets.all(5),
                 margin: EdgeInsets.only(left: 5),

@@ -1,3 +1,6 @@
+// To parse this JSON data, do
+//
+//     final shipmentDetailsModels = shipmentDetailsModelsFromJson(jsonString);
 
 import 'dart:convert';
 
@@ -50,12 +53,12 @@ class ShipmentDetailsData {
   int? weight;
   String? dimensions;
   String? typeOfGoods;
-  dynamic uploadedBol;
+  String? uploadedBol;
   String? driverAccept;
   dynamic customerSign;
   String? driverSign;
   String? driverLocation;
-  String? review;
+  dynamic review;
   dynamic reviewText;
   String? qrcode;
   String? brokerDispatchSheet;
@@ -63,6 +66,7 @@ class ShipmentDetailsData {
   bool? brokerApprove;
   DateTime? createdAt;
   int? v;
+  bool? showBol;
 
   ShipmentDetailsData({
     this.id,
@@ -98,6 +102,7 @@ class ShipmentDetailsData {
     this.brokerApprove,
     this.createdAt,
     this.v,
+    this.showBol,
   });
 
   factory ShipmentDetailsData.fromJson(Map<String, dynamic> json) => ShipmentDetailsData(
@@ -134,6 +139,7 @@ class ShipmentDetailsData {
     brokerApprove: json["broker_approve"],
     createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
     v: json["__v"],
+    showBol: json["showBOL"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -170,6 +176,7 @@ class ShipmentDetailsData {
     "broker_approve": brokerApprove,
     "created_at": createdAt?.toIso8601String(),
     "__v": v,
+    "showBOL": showBol,
   };
 }
 

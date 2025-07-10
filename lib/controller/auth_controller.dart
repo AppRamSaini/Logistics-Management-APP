@@ -28,7 +28,7 @@ class AuthController extends GetxController {
     try {
       var response = await manager.postRequest(ApiEndPoints.login, bodyData);
       var resData = json.decode(await response.stream.bytesToString());
-print (resData);
+      print(resData);
       if (response.statusCode == 200) {
         if (resData['status'] == true) {
           storage.setToken(resData['token'].toString());
@@ -65,8 +65,10 @@ print (resData);
 
         if (resData['status'] == true) {
           driverDetails = DriverDetails.fromJson(resData['data']);
-          print('Driver Details: ${driverDetails.driver!.companyName.toString()}');
-          if (!forDashboard && driverDetails.driver!.companyName == null||driverDetails.driver!.companyName!.isEmpty) {
+          print(
+              'Driver Details: ${driverDetails.driver!.companyName.toString()}');
+          if (!forDashboard && driverDetails.driver!.companyName == null ||
+              driverDetails.driver!.companyName!.isEmpty) {
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -127,9 +129,9 @@ print (resData);
   //   }
   // }
 
-
   // ready notifications
-  Future<void> addDriverDetailsAPI(BuildContext context,  String driverName, String mcNumber, String companyName) async {
+  Future<void> addDriverDetailsAPI(BuildContext context, String driverName,
+      String mcNumber, String companyName) async {
     DbStorage dbStorage = DbStorage();
     var token = dbStorage.getToken();
     try {
@@ -138,8 +140,12 @@ print (resData);
         'Authorization': 'Bearer $token'
       };
       var request =
-      http.Request('POST', Uri.parse(ApiEndPoints.addDriverDetails));
-      request.body = json.encode({"company_name": companyName, "mc_number": mcNumber, "driver_name": driverName});
+          http.Request('POST', Uri.parse(ApiEndPoints.addDriverDetails));
+      request.body = json.encode({
+        "company_name": companyName,
+        "mc_number": mcNumber,
+        "driver_name": driverName
+      });
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
@@ -163,9 +169,6 @@ print (resData);
       EasyLoading.dismiss();
     }
   }
-
-
-
 
   // forgot password API
   Future<void> forgotPasswordAPI(
@@ -263,9 +266,11 @@ print (resData);
     try {
       var response = await manager.getRequest(ApiEndPoints.getDriver);
 
-      if (response.statusCode == 201) {
-        var resData = json.decode(await response.stream.bytesToString());
+      // 🔧 Stream को एक ही बार read करें
+      String responseString = await response.stream.bytesToString();
+      var resData = json.decode(responseString);
 
+      if (response.statusCode == 201) {
         if (resData['status'] == true) {
           fetchDriversDetails = DriverDetails.fromJson(resData['data']);
           print('Driver Details: ${fetchDriversDetails.userResult}');
@@ -275,7 +280,7 @@ print (resData);
           return null;
         }
       } else {
-        customSnackBar('Error: ${response.statusCode}', isError: true);
+        customSnackBar('Error: ${resData['message']}', isError: true);
         return null;
       }
     } catch (e) {
@@ -284,4 +289,5 @@ print (resData);
       return null;
     }
   }
+
 }

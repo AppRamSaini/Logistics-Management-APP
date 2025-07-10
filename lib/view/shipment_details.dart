@@ -11,6 +11,7 @@ import 'package:logistics_app/view/customer_signature.dart';
 import 'package:logistics_app/view/loading_bill.dart';
 import 'package:logistics_app/view/qr_code%20page.dart';
 import 'package:logistics_app/view/shipment_tracking.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class ShipmentDetails extends StatefulWidget {
   final String shipmentId;
@@ -46,16 +47,22 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                   return Center(child: CircularProgressIndicator.adaptive());
                 } else if (snapshot.connectionState == ConnectionState.none) {
                   return Center(
-                      child: Text(
-                    "Internet connection error",
-                    style: AppStyle.medium_16(AppColors.red),
-                  ));
+                      child: Text("Internet connection error",
+                          style: AppStyle.medium_16(AppColors.red)));
                 } else if (snapshot.hasError) {
                   return Center(
                       child: Text("Error: ${snapshot.error}",
                           style: AppStyle.medium_16(AppColors.red)));
                 } else if (snapshot.hasData) {
-                  ShipmentDetailsData data = snapshot.data!.first;
+                  ShipmentDetailsData data = ShipmentDetailsData();
+
+                  if (snapshot.data!.isNotEmpty) {
+                    data = snapshot.data!.first;
+                  } else {
+                    return Center(
+                        child: Text("Data not fount",
+                            style: AppStyle.medium_14(AppColors.black50)));
+                  }
 
                   return SingleChildScrollView(
                     physics: AlwaysScrollableScrollPhysics(),
@@ -83,7 +90,7 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                                             style: AppStyle.medium_14(
                                                 AppColors.black50)),
                                         Expanded(
-                                          child: Text(data.name!.toString(),
+                                          child: Text(data.name ?? '',
                                               overflow: TextOverflow.ellipsis,
                                               maxLines: 2,
                                               style: AppStyle.medium_14(
@@ -449,6 +456,22 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                             ],
                           ),
                         ),
+                        SizedBox(height: size.height * 0.02),
+                        Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text("Broker Dispatch Sheet",
+                                style: AppStyle.semibold_18(AppColors.black))),
+                        SizedBox(height: size.height * 0.01),
+                        buildDispatchViewer(
+                            data.brokerDispatchSheet.toString()),
+                        SizedBox(height: size.height * 0.03),
+                        Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text("Carrier Dispatch Sheet",
+                                style: AppStyle.semibold_18(AppColors.black))),
+                        SizedBox(height: size.height * 0.01),
+                        buildDispatchViewer(
+                            data.carrierDispatchSheet.toString()),
                         data.driverLocation == 'delivered'
                             ? SizedBox()
                             : Container(
@@ -464,7 +487,6 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    //    Cancel Button
                                     data.driverLocation == 'Reached'
                                         ? SizedBox()
                                         : Expanded(
@@ -481,12 +503,12 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                                               },
                                               height: size.height * 0.05,
                                               shape: RoundedRectangleBorder(
-                                                side: BorderSide(
-                                                    color:
-                                                        AppColors.themeColor),
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
-                                              ),
+                                                  side: BorderSide(
+                                                      color:
+                                                          AppColors.themeColor),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          30)),
                                               child: Text(
                                                 "Cancel",
                                                 style: AppStyle.medium_16(
@@ -525,27 +547,29 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (_) => QrCOdePage(
-                                                  qrcodeLink: data.qrcode.toString(),
+                                                  qrcodeLink:
+                                                      data.qrcode.toString(),
                                                 ),
                                               ),
                                             );
                                           } else {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (_) => LoadingBill(
-                                                    shipmentId:
-                                                        data.id.toString()),
-                                              ),
-                                            );
+                                            if (data.showBol == true) {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (_) => LoadingBill(
+                                                      shipmentId:
+                                                          data.id.toString()),
+                                                ),
+                                              );
+                                            }
                                           }
                                         },
                                         height: size.height * 0.05,
-                                        color: AppColors.themeColor,
+                                        color: data.showBol==true?  AppColors.themeColor:AppColors.grey,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                        ),
+                                            borderRadius:
+                                                BorderRadius.circular(30)),
                                         child: FittedBox(
                                           child: Text(
                                             data.driverLocation == 'running'
@@ -573,5 +597,18 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
         ),
       ),
     );
+  }
+
+  Widget buildDispatchViewer(String url) {
+    String ext = url.split('.').last.toLowerCase();
+    if (ext == 'jpg' || ext == 'jpeg' || ext == 'png') {
+      return Image.network(url,
+          fit: BoxFit.contain,
+          errorBuilder: (_, __, ___) => Icon(Icons.broken_image));
+    } else if (ext == 'pdf') {
+      return SfPdfViewer.network(url, password: 'syncfusion');
+    } else {
+      return Center(child: Text('Unsupported file format'));
+    }
   }
 }
