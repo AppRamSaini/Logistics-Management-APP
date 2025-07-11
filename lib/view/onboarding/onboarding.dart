@@ -40,21 +40,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(toolbarHeight: 0),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 15,right: 15,bottom: 30),
-        child: appButton(onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (_)=>LoginPage()));
-        },
-            text: AppStrings.skipToMainContents),
+      bottomNavigationBar: SafeArea(
+        bottom: false,
+        child: Padding(
+            padding: const EdgeInsets.only(left: 15, right: 15, bottom: 20),
+            child: appButton(
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (_) => LoginPage()));
+                },
+                text: AppStrings.skipToMainContents)),
       ),
       body: Column(
         children: [
-      Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
-      child: Image.asset(AppAssets.appLogo,
-          height: size.height*0.08, width: size.width*0.5, fit: BoxFit.fill
-      ),
-    ),
+          Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+              child: Image.asset(AppAssets.appLogo,
+                  // height: size.height * 0.08,
+                  width: size.width * 0.5,
+                  fit: BoxFit.fill)),
           SizedBox(
             height: size.height * 0.45,
             child: PageView.builder(
@@ -92,7 +96,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
             child: Text(
                 "Welcome to your driver portal. Easily upload your BOLs, add essential details, and sign documents—all in one place. Stay organized, save time, and focus on the road ahead.",
                 textAlign: TextAlign.center,

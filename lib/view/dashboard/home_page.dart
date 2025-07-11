@@ -162,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                                     "Total \nin-transit",
                                     AppColors.themeColor,
                                     AppColors.whiteColor,
-                                    data.statusData!.transit.toString()),
+                                    data.statusData!.transit.toString(),Icons.fire_truck_outlined),
                               ),
                               SizedBox(width: size.width * 0.03),
                               Flexible(
@@ -170,7 +170,7 @@ class _HomePageState extends State<HomePage> {
                                     "Delivered Shipment",
                                     AppColors.black,
                                     AppColors.whiteColor,
-                                    data.statusData!.delivered.toString()),
+                                    data.statusData!.delivered.toString(),Icons.delivery_dining),
                               ),
                             ],
                           ),
@@ -183,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                                     "Pending Delivery",
                                     AppColors.black10,
                                     AppColors.black,
-                                    data.statusData!.pending.toString()),
+                                    data.statusData!.pending.toString(),Icons.access_time),
                               ),
                               SizedBox(width: size.width * 0.03),
                               Flexible(
@@ -191,7 +191,7 @@ class _HomePageState extends State<HomePage> {
                                     "Total \nShipment",
                                     AppColors.blueGrey,
                                     AppColors.black,
-                                    data.shipment.toString()),
+                                    data.shipment.toString(),Icons.shutter_speed),
                               ),
                             ],
                           ),
@@ -254,7 +254,7 @@ class _HomePageState extends State<HomePage> {
 }
 
 Widget _shipmentContainer(
-        String text, Color color, Color txtColor, String counts) =>
+        String text, Color color, Color txtColor, String counts,   IconData? icon) =>
     Container(
       padding: EdgeInsets.all(8),
       decoration:
@@ -273,14 +273,14 @@ Widget _shipmentContainer(
 
               SizedBox(width: 10),
               Container(
-                padding: EdgeInsets.all(5),
+                padding: EdgeInsets.all(8),
                 margin: EdgeInsets.only(left: 5),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(4),
                     color: AppColors.whiteColor),
                 child: Icon(
-                  Icons.fire_truck_sharp,
-                  size: 15,
+                 icon,
+                  size: 18,
                   color: AppColors.themeColor,
                 ),
               )
