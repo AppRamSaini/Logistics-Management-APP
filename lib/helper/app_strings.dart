@@ -3,10 +3,10 @@ class AppStrings{
   static const appTitle= "Logistics App";
   static const skipToMainContents= "Skip to main content";
   static const loginToYourAccount= "Login to your account ";
-  static const enterYourDetails= "Enter Your details to continue  ";
+  static const enterYourDetails= "Enter your details to continue  ";
   static const enterYourNumber= "Your Email";
   static const emailAndNumber= "Enter your email";
-  static const forgotPassword= "Forget Password?";
+  static const forgotPassword= "Forgot Password?";
   static const password= "Password";
   static const login= "Log In";
   static const numberError= "Please enter email";

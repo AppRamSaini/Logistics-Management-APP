@@ -63,7 +63,8 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
 
                 return SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                         margin: EdgeInsets.all(12),
@@ -75,8 +76,7 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                         child: Column(
                           children: [
                             Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Expanded(
                                   child: Row(
@@ -97,8 +97,7 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                                   ),
                                 ),
                                 Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text("Amt : ₹",
                                         style: AppStyle.medium_14(
@@ -122,14 +121,13 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text("Shipment Status",
-                                      style: AppStyle.medium_16(
-                                          AppColors.black)),
+                                      style:
+                                          AppStyle.medium_16(AppColors.black)),
                                   Container(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 8, vertical: 3),
                                     decoration: BoxDecoration(
-                                        color: data.driverLocation ==
-                                                'transit'
+                                        color: data.driverLocation == 'transit'
                                             ? AppColors.red.withOpacity(0.2)
                                             : data.driverLocation == 'running'
                                                 ? AppColors.orange
@@ -140,8 +138,7 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                                                         .withOpacity(0.2)
                                                     : AppColors.green
                                                         .withOpacity(0.2),
-                                        borderRadius:
-                                            BorderRadius.circular(4)),
+                                        borderRadius: BorderRadius.circular(4)),
                                     child: Text(
                                       data.driverLocation
                                               ?.toString()
@@ -174,14 +171,14 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                                         color: AppColors.themeColor),
                                     SizedBox(width: 10),
                                     Text("Pickup From",
-                                        style: AppStyle.medium_14(
-                                            AppColors.black))
+                                        style:
+                                            AppStyle.medium_14(AppColors.black))
                                   ]),
                                 ),
                                 Flexible(
                                   child: Text(data.pickupLocation.toString(),
-                                      style: AppStyle.medium_14(
-                                          AppColors.black)),
+                                      style:
+                                          AppStyle.medium_14(AppColors.black)),
                                 )
                               ],
                             ),
@@ -199,8 +196,8 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                                 ])),
                                 Flexible(
                                   child: Text(data.dropLocation.toString(),
-                                      style: AppStyle.medium_14(
-                                          AppColors.black)),
+                                      style:
+                                          AppStyle.medium_14(AppColors.black)),
                                 )
                               ],
                             ),
@@ -219,9 +216,7 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                                           Text("Customer Name",
                                               style: AppStyle.medium_14(
                                                   AppColors.black)),
-                                          Text(
-                                              data.customerId!.name
-                                                  .toString(),
+                                          Text(data.customerId!.name.toString(),
                                               style: AppStyle.medium_14(
                                                   AppColors.black50)),
                                         ])
@@ -260,8 +255,7 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                                               style: AppStyle.medium_14(
                                                   AppColors.black)),
                                           Text(
-                                              data.driverId!.name
-                                                      .toString() ??
+                                              data.driverId!.name.toString() ??
                                                   '',
                                               style: AppStyle.medium_14(
                                                   AppColors.black50)),
@@ -288,7 +282,8 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                       ),
                       SizedBox(height: size.height * 0.02),
                       Container(
-                        margin: EdgeInsets.only(left: 12,right: 15,bottom: 12),
+                        margin:
+                            EdgeInsets.only(left: 12, right: 15, bottom: 12),
                         padding: EdgeInsets.all(8),
                         decoration: BoxDecoration(
                             border: Border.all(color: AppColors.black10),
@@ -312,8 +307,7 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                                   ),
                                 ),
                                 Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text("Shipment Name",
                                         style: AppStyle.semibold_16(
@@ -330,8 +324,7 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                                     const EdgeInsets.symmetric(vertical: 5),
                                 child: Divider(color: AppColors.black10)),
                             Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Flexible(
                                   child: Column(
@@ -385,13 +378,11 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                               ],
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 5),
+                              padding: const EdgeInsets.symmetric(vertical: 5),
                               child: Divider(color: AppColors.black10),
                             ),
                             Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Flexible(
                                   child: Column(
@@ -454,35 +445,67 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                         ),
                       ),
                       SizedBox(height: size.height * 0.02),
-                      Padding(
-                        padding: EdgeInsets.only(left: 12),
-                        child: Text("Broker Dispatch Sheet",
-                            style: AppStyle.semibold_18(AppColors.black))
-                      ),
-                      SizedBox(height: size.height * 0.01),
-                      Padding(
-                        padding: EdgeInsets.only(left: 12,right: 12),
-                        child: buildDispatchViewer(
-                            data.brokerDispatchSheet.toString())
-                      ),
+                      Container(
+                          margin:
+                              EdgeInsets.only(left: 10, right: 10, bottom: 12),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: AppColors.black10),
+                              borderRadius: BorderRadius.circular(8),
+                              color: AppColors.whiteColor),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                alignment: Alignment.center,
+                                height: 50,
+                                width: size.width,
+                                decoration:
+                                    BoxDecoration(color: AppColors.black10),
+                                child: Text("Broker Dispatch Sheet",
+                                    style:
+                                        AppStyle.semibold_18(AppColors.black)),
+                              ),
+                              SizedBox(height: size.height * 0.01),
+                              buildDispatchViewer(
+                                  data.brokerDispatchSheet.toString())
+                            ],
+                          )),
                       SizedBox(height: size.height * 0.03),
-                      Padding(
-                        padding: EdgeInsets.only(left: 12),
-                        child: Text("Carrier Dispatch Sheet",
-                            style: AppStyle.semibold_18(AppColors.black))
-                      ),
-                      SizedBox(height: size.height * 0.01),
-                      Padding(
-                        padding: EdgeInsets.only(left: 12,right: 12),
-                        child: buildDispatchViewer(
-                            data.carrierDispatchSheet.toString())
-                      ),
+
+                      Container(
+                          margin:
+                          EdgeInsets.only(left: 10, right: 10, bottom: 12),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: AppColors.black10),
+                              borderRadius: BorderRadius.circular(8),
+                              color: AppColors.whiteColor),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                alignment: Alignment.center,
+                                height: 50,
+                                width: size.width,
+                                decoration:
+                                BoxDecoration(color: AppColors.black10),
+                                child: Text("Carrier Dispatch Sheet",
+                                    style:
+                                    AppStyle.semibold_18(AppColors.black)),
+                              ),
+                              SizedBox(height: size.height * 0.01),
+                              buildDispatchViewer(
+                                  data.carrierDispatchSheet.toString())
+                            ],
+                          )),
+
                       data.driverLocation == 'delivered'
                           ? SizedBox()
                           : Container(
                               margin: EdgeInsets.only(
-                                left: 10,right: 10,
-                                  top: size.height * 0.05,bottom: size.height*0.05),
+                                  left: 10,
+                                  right: 10,
+                                  top: size.height * 0.05,
+                                  bottom: size.height * 0.05),
                               padding: EdgeInsets.symmetric(
                                   horizontal: 12, vertical: 8),
                               decoration: BoxDecoration(
@@ -512,8 +535,7 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                                                     color:
                                                         AppColors.themeColor),
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        30)),
+                                                    BorderRadius.circular(30)),
                                             child: Text(
                                               "Cancel",
                                               style: AppStyle.medium_16(
@@ -528,17 +550,13 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                                     child: MaterialButton(
                                       elevation: 0,
                                       onPressed: () {
-                                        if (data.driverLocation ==
-                                            'running') {
+                                        if (data.driverLocation == 'running') {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (_) =>
-                                                  ShipmentTracking(
-                                                shipmentId:
-                                                    data.id.toString(),
-                                                dropLocation: data
-                                                    .dropLocation
+                                              builder: (_) => ShipmentTracking(
+                                                shipmentId: data.id.toString(),
+                                                dropLocation: data.dropLocation
                                                     .toString(),
                                                 pickupLocation: data
                                                     .pickupLocation
@@ -582,8 +600,7 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
                                         child: Text(
                                           data.driverLocation == 'running'
                                               ? 'TRACKING'
-                                              : data.driverLocation ==
-                                                      'Reached'
+                                              : data.driverLocation == 'Reached'
                                                   ? 'VIEW QR'
                                                   : "NEXT",
                                           style: AppStyle.medium_16(
@@ -609,15 +626,28 @@ class _ShipmentDetailsState extends State<ShipmentDetails> {
   }
 
   Widget buildDispatchViewer(String url) {
+    print('---------$url');
     String ext = url.split('.').last.toLowerCase();
+
     if (ext == 'jpg' || ext == 'jpeg' || ext == 'png') {
-      return Image.network(url,
+      return SizedBox(
+        height: 300,
+        child: Image.network(
+          url,
           fit: BoxFit.contain,
-          errorBuilder: (_, __, ___) => Icon(Icons.broken_image));
+          errorBuilder: (_, __, ___) => const Icon(Icons.broken_image),
+        ),
+      );
     } else if (ext == 'pdf') {
-      return SfPdfViewer.network(url, password: 'syncfusion');
+      return SizedBox(
+        height: size.height * 0.6,
+        child: SfPdfViewer.network(
+          url,
+          password: 'syncfusion',
+        ),
+      );
     } else {
-      return Center(child: Text('Unsupported file format'));
+      return const Center(child: Text('Unsupported file format'));
     }
   }
 }

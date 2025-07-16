@@ -72,7 +72,8 @@ class _HomePageState extends State<HomePage> {
                             radius: 25,
                             backgroundColor: AppColors.themeColor,
                             child: Text('LG',
-                                style: AppStyle.medium_16(AppColors.whiteColor)),
+                                style:
+                                    AppStyle.medium_16(AppColors.whiteColor)),
                           ),
                           title: Text("Loading...",
                               style: AppStyle.medium_16(AppColors.black)),
@@ -104,7 +105,8 @@ class _HomePageState extends State<HomePage> {
                         // ⚠️ No Data / Null Response
                         return ListTile(
                           contentPadding: EdgeInsets.zero,
-                          leading: const Icon(Icons.warning, color: Colors.orange),
+                          leading:
+                              const Icon(Icons.warning, color: Colors.orange),
                           title: Text("No driver data found",
                               style: AppStyle.medium_14(AppColors.black)),
                           subtitle: Text("Please try again or contact support.",
@@ -120,7 +122,8 @@ class _HomePageState extends State<HomePage> {
 
                       // ✅ Success State
                       final DriverDetails data = snapshot.data!;
-                      final String initials = getInitials(data.userResult?.name ?? "NA");
+                      final String initials =
+                          getInitials(data.userResult?.name ?? "NA");
 
                       return ListTile(
                         contentPadding: EdgeInsets.zero,
@@ -130,7 +133,8 @@ class _HomePageState extends State<HomePage> {
                             radius: 25,
                             backgroundColor: AppColors.themeColor,
                             child: Text(initials,
-                                style: AppStyle.medium_16(AppColors.whiteColor)),
+                                style:
+                                    AppStyle.medium_16(AppColors.whiteColor)),
                           ),
                         ),
                         title: Text(
@@ -138,14 +142,14 @@ class _HomePageState extends State<HomePage> {
                           style: AppStyle.medium_14(AppColors.black),
                         ),
                         subtitle: Text(
-                          capitalizeFirstLetter(data.driver?.companyName ?? 'N/A'),
+                          capitalizeFirstLetter(
+                              data.driver?.companyName ?? 'N/A'),
                           style: AppStyle.medium_12(AppColors.black),
                         ),
                         trailing: _buildSwitchRow(context),
                       );
                     },
                   ),
-
                   Expanded(
                       child: RefreshIndicator(
                     onRefresh: onRefresh,
@@ -162,15 +166,17 @@ class _HomePageState extends State<HomePage> {
                                     "Total \nin-transit",
                                     AppColors.themeColor,
                                     AppColors.whiteColor,
-                                    data.statusData!.transit.toString(),Icons.fire_truck_outlined),
+                                    data.statusData!.transit.toString(),
+                                    Icons.fire_truck_outlined),
                               ),
                               SizedBox(width: size.width * 0.03),
                               Flexible(
                                 child: _shipmentContainer(
-                                    "Delivered Shipment",
+                                    "Delivered Shipments",
                                     AppColors.black,
                                     AppColors.whiteColor,
-                                    data.statusData!.delivered.toString(),Icons.delivery_dining),
+                                    data.statusData!.delivered.toString(),
+                                    Icons.delivery_dining),
                               ),
                             ],
                           ),
@@ -180,18 +186,20 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Flexible(
                                 child: _shipmentContainer(
-                                    "Pending Delivery",
+                                    "Pending Deliveries",
                                     AppColors.black10,
                                     AppColors.black,
-                                    data.statusData!.pending.toString(),Icons.access_time),
+                                    data.statusData!.pending.toString(),
+                                    Icons.access_time),
                               ),
                               SizedBox(width: size.width * 0.03),
                               Flexible(
                                 child: _shipmentContainer(
-                                    "Total \nShipment",
+                                    "Total \nShipments",
                                     AppColors.blueGrey,
                                     AppColors.black,
-                                    data.shipment.toString(),Icons.shutter_speed),
+                                    data.shipment.toString(),
+                                    Icons.shutter_speed),
                               ),
                             ],
                           ),
@@ -199,7 +207,7 @@ class _HomePageState extends State<HomePage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('All Order',
+                              Text('All Orders',
                                   style: AppStyle.semibold_18(AppColors.black)),
                               Container(
                                 padding: EdgeInsets.symmetric(
@@ -253,8 +261,8 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-Widget _shipmentContainer(
-        String text, Color color, Color txtColor, String counts,   IconData? icon) =>
+Widget _shipmentContainer(String text, Color color, Color txtColor,
+        String counts, IconData? icon) =>
     Container(
       padding: EdgeInsets.all(8),
       decoration:
@@ -270,7 +278,6 @@ Widget _shipmentContainer(
                       maxLines: 2,
                       textAlign: TextAlign.center,
                       style: AppStyle.medium_14(txtColor))),
-
               SizedBox(width: 10),
               Container(
                 padding: EdgeInsets.all(8),
@@ -279,7 +286,7 @@ Widget _shipmentContainer(
                     borderRadius: BorderRadius.circular(4),
                     color: AppColors.whiteColor),
                 child: Icon(
-                 icon,
+                  icon,
                   size: 18,
                   color: AppColors.themeColor,
                 ),
